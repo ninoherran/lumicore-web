@@ -6,10 +6,11 @@ import {PasswordInput}       from "./PasswordInput.jsx";
 import {setupService}        from "../../service/setupService.js";
 import {toaster}             from "../core/ui/toaster.jsx";
 import {useNavigate}         from "react-router";
+import {EmailInput}          from "../core/EmailInput.jsx";
 
 export function SetupForm() {
-	const {navigate} = useNavigate();
-	const redirectToHomePage = navigate("/")
+	const navigate = useNavigate();
+	const redirectToHomePage = ()=> navigate("/")
 	const [email, setEmail] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
@@ -39,8 +40,7 @@ export function SetupForm() {
 
 	return (
 		<Flex direction={"column"} justifyContent={"center"} align={"center"} gap={"1rem"}>
-			<InputWithLabel label={"Email"} value={email} required={true} onChange={setEmail}
-							placeholder={"jean.dupont@dupontcompany.com"}/>
+			<EmailInput onChange={setEmail} value={email} />
 			<Flex direction={"row"} justifyContent={"space-between"} align={"center"} gap={"2rem"}>
 				<InputWithLabel label={"Prénom"} value={firstName} required={true} onChange={setFirstName}
 								placeholder={"Jean"}/>
@@ -52,7 +52,7 @@ export function SetupForm() {
 			<PasswordInput value={password} onValid={setPassword} setIsMatching={setIsMatching}/>
 
 			<Flex w={"100%"} justify={"end"} align={"center"}>
-				<Button colorPalette="green" disabled={!isSetupInfoValid}><RiAccountBoxLine/> Créer le compte</Button>
+				<Button colorPalette="green" disabled={!isSetupInfoValid} onClick={handleSubmit}><RiAccountBoxLine/> Créer le compte</Button>
 			</Flex>
 		</Flex>
 	)

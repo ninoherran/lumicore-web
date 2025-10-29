@@ -1,6 +1,6 @@
 import {Field, Input} from "@chakra-ui/react";
 
-export function InputWithLabel({label, value, onChange, placeholder, required}) {
+export function InputWithLabel({label, value, onChange, placeholder, required, type = "text"}) {
 	const handleChange = (e) => onChange(e.target.value);
 
 	return (
@@ -10,7 +10,7 @@ export function InputWithLabel({label, value, onChange, placeholder, required}) 
 			</Field.Label>
 			<Input placeholder={placeholder} value={value} onChange={handleChange} id={label}
 				   _hover={{borderColor: "green.700"}} _focus={{outlineColor: "green.700", borderColor: "green.700"}}
-				   transition={"0.15s"}/>
+				   transition={"0.15s"} type={type}/>
 		</Field.Root>
 	)
 }
