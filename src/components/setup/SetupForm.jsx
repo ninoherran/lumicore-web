@@ -1,0 +1,47 @@
+import {Button, Flex}        from "@chakra-ui/react";
+import {useEffect, useState} from "react";
+import {InputWithLabel}      from "../core/InputWithLabel.jsx";
+import {RiAccountBoxLine}    from "react-icons/ri";
+import {PasswordInput}       from "./PasswordInput.jsx";
+
+export function SetupForm() {
+	const [email, setEmail] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [companyName, setCompanyName] = useState("");
+	const [password, setPassword] = useState("");
+	const [isMatching, setIsMatching] = useState(false);
+	const isValid = useValidateSetupInfo(email, firstName, lastName, companyName, password, isMatching);
+
+	return (
+		<Flex direction={"column"} justifyContent={"center"} align={"center"} gap={"1rem"}>
+			<InputWithLabel label={"Email"} value={email} required={true} onChange={setEmail}
+							placeholder={"jean.dupont@dupontcompany.com"}/>
+			<Flex direction={"row"} justifyContent={"space-between"} align={"center"} gap={"2rem"}>
+				<InputWithLabel label={"Prénom"} value={firstName} required={true} onChange={setFirstName}
+								placeholder={"Jean"}/>
+				<InputWithLabel label={"Nom de famille"} value={lastName} required={true} onChange={setLastName}
+								placeholder={"Dupont"}/>
+			</Flex>
+			<InputWithLabel label={"Nom de votre entreprise"} value={companyName} required={true}
+							onChange={setCompanyName} placeholder={"Dupont Company"}/>
+			<PasswordInput value={password} onValid={setPassword} setIsMatching={setIsMatching}/>
+
+			<Flex w={"100%"} justify={"end"} align={"center"}>
+				<Button colorPalette="green" disabled={!isValid}><RiAccountBoxLine/> Créer le compte</Button>
+			</Flex>
+		</Flex>
+	)
+}
+
+function useValidateSetupInfo(email, firstName, lastName, companyName, password, isPasswordMatching) {
+	const [isValid, setIsValid] = useState(false);
+
+	useEffect(() => {
+		if (email !== "" && firstName !== "" && lastName !== "" && companyName !== "" && password !== "" && isPasswordMatching) {
+			setIsValid(true);
+		}
+	}, [email, firstName, lastName, companyName, password]);
+
+	return isValid;
+}
